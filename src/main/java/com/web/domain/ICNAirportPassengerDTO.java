@@ -34,6 +34,14 @@ public class ICNAirportPassengerDTO extends BaseEntity {
     
 	@Column(name = "t1dep56")
 	private String t1sum8;  // T1 출국장(5,6) 대기인원수
-
+	
+	
+	@Column(name = "t2dep1")
+	private String t2sum3;  // T2 출국장(1) 대기인원수
+	
+	@Column(name = "t2dep2")
+	private String t2sum4;  // T2 출국장(2) 대기인원수
+	
+	
 
 }

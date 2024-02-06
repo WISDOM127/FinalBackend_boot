@@ -73,20 +73,24 @@ public class ICNAirportCongestionController {
         try {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(responseData);
             JSONObject responseBody = (JSONObject) jsonObject.get("response");
+            JSONObject header = (JSONObject) responseBody.get("header");
             JSONObject body = (JSONObject) responseBody.get("body");
             JSONArray items = (JSONArray) body.get("items");
+            
 
             for (int i = 0; i < items.size(); i++) {
                 JSONObject item = (JSONObject) items.get(i);
-                System.out.println("금일 혼잡도데이터" + i + " ===========================================");
+                System.out.println("금일 출국장 혼잡도" + i +"시 ===========================================");
                 System.out.println("adate : " + item.get("adate"));
                 System.out.println("atime : " + item.get("atime"));
-                System.out.println("t1sum5 : " + item.get("t1sum5"));
-                System.out.println("t1sum6 : " + item.get("t1sum6"));
-                System.out.println("");
+                System.out.println("t1sumset1 : " + item.get("t1sumset1"));
+                System.out.println("t2sumset1 : " + item.get("t2sumset1"));
 
                 result.add(item);
             }
+                        
+            System.out.println("resultCode : "+ header.get("resultCode"));
+            System.out.println("resultMsg : "+ header.get("resultMsg"));            
             
             return result;
             
@@ -99,12 +103,17 @@ public class ICNAirportCongestionController {
     
     private ICNAirportPassengerDTO convertToDTO(JSONObject data) {
         ICNAirportPassengerDTO dto = new ICNAirportPassengerDTO();
+        //일시
         dto.setAdate(data.get("adate").toString());
         dto.setAtime(data.get("atime").toString());
+        //t1출국장
         dto.setT1sum5(data.get("t1sum5").toString());
         dto.setT1sum6(data.get("t1sum6").toString());
         dto.setT1sum7(data.get("t1sum7").toString());
         dto.setT1sum8(data.get("t1sum8").toString());
+        //t2출국장
+        dto.setT2sum3(data.get("t2sum3").toString());
+        dto.setT2sum4(data.get("t2sum4").toString());        
        
 //        dto.setT1sum8(Integer.parseInt(data.get("t1sum8").toString()));     
 //        dto.setT1sum6(data.get("t1sum6").toString());
