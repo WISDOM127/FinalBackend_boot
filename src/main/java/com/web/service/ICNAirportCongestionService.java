@@ -9,9 +9,9 @@ import java.util.List;
 public interface ICNAirportCongestionService {
 	
 	//api -> db 데이터 저장
-	void updateData(ICNAirportPassengerDTO dto);
+	public void updateData(ICNAirportPassengerDTO dto);
 
-	//오늘의 출국장 대기인원 정보
-	//List<ICNAirportPassengerDTO> getTodayPassenger();
-    	
+	//시간대별 대기인원 정보 조회(attime 으로 조회) -> dto 반환
+	public ICNAirportPassengerDTO getTimeData(String atime);
+	 	
 }

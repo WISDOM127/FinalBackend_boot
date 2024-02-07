@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -103,20 +104,33 @@ public class ICNAirportCongestionController {
     
     private ICNAirportPassengerDTO convertToDTO(JSONObject data) {
         ICNAirportPassengerDTO dto = new ICNAirportPassengerDTO();
+        
+        //시간대 가공 ex)2~3시 데이터 -> 02
+        String time = data.get("atime").toString();
+        String hourTime = time.substring(0, 2);
+        System.out.println(hourTime);
+        
+    	String t1dep12 = xdot(data.get("t1sum5").toString());
+    	String t1dep3 = xdot(data.get("t1sum6").toString());
+    	String t1dep4 = xdot(data.get("t1sum7").toString());
+    	String t1dep56 = xdot(data.get("t1sum8").toString());
+    	String t2dep1 = xdot(data.get("t2sum3").toString());
+    	String t2dep2 = xdot(data.get("t2sum4").toString());
+        
         //일시
-        dto.setAdate(data.get("adate").toString());
-        dto.setAtime(data.get("atime").toString());
+        dto.setAdate(data.get("adate").toString());		//20211130
+        dto.setAtime(hourTime);
         //t1출국장
-        dto.setT1sum5(data.get("t1sum5").toString());
-        dto.setT1sum6(data.get("t1sum6").toString());
-        dto.setT1sum7(data.get("t1sum7").toString());
-        dto.setT1sum8(data.get("t1sum8").toString());
+        dto.setT1sum5(t1dep12);
+        dto.setT1sum6(t1dep3);
+        dto.setT1sum7(t1dep4);
+        dto.setT1sum8(t1dep56);
         //t2출국장
-        dto.setT2sum3(data.get("t2sum3").toString());
-        dto.setT2sum4(data.get("t2sum4").toString());        
+        dto.setT2sum3(t2dep1);
+        dto.setT2sum4(t2dep2);        
        
-//        dto.setT1sum8(Integer.parseInt(data.get("t1sum8").toString()));     
-//        dto.setT1sum6(data.get("t1sum6").toString());
+//        json에서 받아온 string 타입 그대로 사용할 경우   
+//        > dto.setT1sum6(data.get("t1sum6").toString());
         
         return dto;
     }
@@ -132,6 +146,7 @@ public class ICNAirportCongestionController {
 
             for (JSONObject data : congestionDataList) {
                 ICNAirportPassengerDTO dto = convertToDTO(data);
+                
                 congestionService.updateData(dto);
             }
             
@@ -143,6 +158,35 @@ public class ICNAirportCongestionController {
             return msg;
         }
     }
+    
+    //"0.0" -> 0 int 형태로 파싱메서드
+    public int dotToInt(String str) {
+    	double doubleValue = Double.parseDouble(str);
+    	int result = (int) doubleValue;
+    	return result;
+    }
+    
+    //"0.0" -> "0" 변환메서드
+    public String xdot(String str) {
+    	String result = str.substring(0, str.length()-2);
+    	return result;
+    }
+    
+    
+    //시간대별 데이터 프론트 전송
+    @PostMapping("/congestionData")
+    public ICNAirportPassengerDTO congestionTimeData (@RequestBody String atime) {
+    	
+    	ICNAirportPassengerDTO dto = new ICNAirportPassengerDTO();
+    	dto = congestionService.getTimeData(atime);
+    	System.out.println(dto);
+    	
+    	System.out.println(dto.getT1sum6());
+    	
+    	//프론트에서 요청 온 시간(atime)에 해당하는 대기인원 데이터 반환
+    	return dto;
+    }
+    
 
 
 
