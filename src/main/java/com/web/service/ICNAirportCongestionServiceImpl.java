@@ -2,7 +2,7 @@ package com.web.service;
 
 import com.web.controller.ICNAirportCongestionController;
 import com.web.domain.ICNAirportPassengerDTO;
-import com.web.persistence.AirportDepRepository;
+import com.web.persistence.CongestionRepository;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +17,19 @@ import java.util.List;
 public class ICNAirportCongestionServiceImpl implements ICNAirportCongestionService {
 
 	@Autowired
-	private AirportDepRepository depRepo;
+	private CongestionRepository cRepo;
 
 	//금일 출국장 대기인원 정보 -> db 저장
 	@Override
 	public void updateData(ICNAirportPassengerDTO dto) {
-		depRepo.save(dto);
+		cRepo.save(dto);
 	};
 
 	//시간대별 대기인원 정보 조회(attime 으로 조회) 
 	@Override
 	public ICNAirportPassengerDTO getTimeData(String atime) {
 		// TODO Auto-generated method stub
-		return depRepo.findByAtime(atime) ;
+		return cRepo.findByAtime(atime) ;
 	}
 	
 	

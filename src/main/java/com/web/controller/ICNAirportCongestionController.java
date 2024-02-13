@@ -138,26 +138,27 @@ public class ICNAirportCongestionController {
    
     //@Scheduled(fixedRate = 60 * 1000) //1분마다 실행
     //@GetMapping("/congestionData")
-    @Scheduled(fixedRate = 30 * 60 * 1000) // 30분마다 실행
-    public String updateCongestionData() {
-    	String msg = "데이터 저장완료";
-        try {
-            List<JSONObject> congestionDataList = getCongestionData();
-
-            for (JSONObject data : congestionDataList) {
-                ICNAirportPassengerDTO dto = convertToDTO(data);
-                
-                congestionService.updateData(dto);
-            }
-            
-            return msg;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            msg = "저장오류";
-            return msg;
-        }
-    }
+//    @Scheduled(fixedRate = 30 * 60 * 1000) // 30분마다 실행
+//    public String updateCongestionData() {
+//    	String msg = "데이터 저장완료";
+//        try {
+//            List<JSONObject> congestionDataList = getCongestionData();
+//
+//            for (JSONObject data : congestionDataList) {
+//                ICNAirportPassengerDTO dto = convertToDTO(data);
+//                
+//                congestionService.updateData(dto);
+//            }
+//        
+//            return msg;
+//            
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            msg = "저장오류";
+//            return msg;
+//        }
+//    }
+    
     
     //"0.0" -> 0 int 형태로 파싱메서드
     public int dotToInt(String str) {
@@ -172,7 +173,6 @@ public class ICNAirportCongestionController {
     	return result;
     }
     
-    
     //시간대별 데이터 프론트 전송
     @PostMapping("/congestionData")
     public ICNAirportPassengerDTO congestionTimeData (@RequestBody String atime) {
@@ -186,8 +186,6 @@ public class ICNAirportCongestionController {
     	//프론트에서 요청 온 시간(atime)에 해당하는 대기인원 데이터 반환
     	return dto;
     }
-    
-
 
 
 }

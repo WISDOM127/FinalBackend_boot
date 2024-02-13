@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.web.domain.ICNAirportPassengerDTO;
 
-public interface AirportDepRepository extends JpaRepository<ICNAirportPassengerDTO, String> {
+public interface CongestionRepository extends JpaRepository<ICNAirportPassengerDTO, String> {
 	
 	public ICNAirportPassengerDTO findByAtime(String atime);
 	

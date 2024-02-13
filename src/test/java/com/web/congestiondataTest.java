@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.domain.ICNAirportPassengerDTO;
-import com.web.persistence.AirportDepRepository;
+import com.web.persistence.CongestionRepository;
 import com.web.service.ICNAirportCongestionService;
 
 
@@ -26,7 +26,7 @@ import com.web.service.ICNAirportCongestionService;
 public class congestiondataTest {
 	
 	@Autowired
-	private AirportDepRepository aRepo;
+	private CongestionRepository aRepo;
 	
 	@Autowired
 	private ICNAirportCongestionService cs;
