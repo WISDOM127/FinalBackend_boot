@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -70,17 +71,17 @@ public class congestiondataTest {
 //		
 //	}
 	
-    //시간대별 데이터 프론트 전송
-	@Test
-    public void congestionTimeData () {
-    	String atime = "02";
-    	ICNAirportPassengerDTO dto = new ICNAirportPassengerDTO();
-    	dto = cs.getTimeData(atime);
-    	System.out.println(dto);
-    	
-    
-    }
-	
+//    //시간대별 데이터 프론트 전송
+//	@Test
+//    public void congestionTimeData () {
+//    	String atime = "02";
+//    	ICNAirportPassengerDTO dto = new ICNAirportPassengerDTO();
+//    	dto = cs.getTimeData(atime);
+//    	System.out.println(dto);
+//    	
+//    
+//    }
+//	
 	
 //	@Test
 //	public void test() {
@@ -91,6 +92,16 @@ public class congestiondataTest {
 //		System.out.println(hehe.getVoucherServiceName()+"/"+hehe.getVoucherService());
 //	}
 	
+	@Test
+	public void nowTime() {
+		String onehourago = "";
+		
+		 LocalDateTime date = LocalDateTime.now();
+		
+		 System.out.println(date);
+		
+		//return onehourago;
+	}
 	
 	
 

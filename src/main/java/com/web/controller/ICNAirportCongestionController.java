@@ -136,17 +136,16 @@ public class ICNAirportCongestionController {
     }
 
    
-    //@Scheduled(fixedRate = 60 * 1000) //1분마다 실행
-    //@Scheduled(cron = "0 0/30 * * * *") // 매시간 30분 간격으로 실행
-    @Scheduled(fixedRate = 30 * 60 * 1000) // 30분마다 실행
+    //@Scheduled(fixedRate = 60 * 1000) //1분마다 실행  
+    @Scheduled(cron = "0 0/10 * * * *") // 매시간 10분 간격으로 실행
+    //@Scheduled(fixedRate = 30 * 60 * 1000) // 30분마다 실행
     public String updateCongestionData() {
     	String msg = "데이터 저장완료";
         try {
             List<JSONObject> congestionDataList = getCongestionData();
 
             for (JSONObject data : congestionDataList) {
-                ICNAirportPassengerDTO dto = convertToDTO(data);
-                
+                ICNAirportPassengerDTO dto = convertToDTO(data);                
                 congestionService.updateData(dto);
             }
         
